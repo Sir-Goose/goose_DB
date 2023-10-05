@@ -1,5 +1,22 @@
+use clap::*;
 
+struct Arguments {
+    arg1 : String,
+    arg2 : String,
+}
 
 fn main() {
-    println!("Hello, world!");
-}
+
+
+
+
+
+
+    }
+    fn decision_tree() {
+
+    }
+
+
+
+
