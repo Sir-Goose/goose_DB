@@ -1,8 +1,11 @@
 use clap::*;
 
+
+#[derive(Parser)]
 struct Arguments {
-    arg1 : String,
-    arg2 : String,
+    read : String,
+    write : String,
+    delete : String
 }
 
 fn main() {
