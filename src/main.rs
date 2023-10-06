@@ -3,8 +3,11 @@ use clap::*;
 
 #[derive(Parser)]
 struct Arguments {
+    /// Read, Write, Modify, Delete
     arg_1 : String,
+    /// Key
     arg_2 : String,
+    /// Pair
     arg_3 : String
 }
 
