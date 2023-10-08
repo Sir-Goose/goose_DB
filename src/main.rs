@@ -1,4 +1,6 @@
 use clap::*;
+use std::collections::HashMap;
+
 
 
 #[derive(Parser)]
@@ -11,8 +13,29 @@ struct Arguments {
     arg_3 : String
 }
 
+struct Database {
+    map: HashMap<String, String>,
+}
+
+impl Database {
+    fn new() -> Self {
+        Self {map: HashMap::new() }
+    }
+
+    fn add(&mut self, key: String, value: String) {
+        self.map.insert(key, value);
+    }
+
+    fn get_value(&self, key: &str) -> Option<&String> {
+        self.map.get(key)
+    }
+    
+}
+
 fn main() {
     let arguments : Arguments = Arguments::parse();
+
+    let mut map:HashMap<String, String> = HashMap::new();
 
     println!("Argument 1: {} Argument 2: {} Argument 3: {}", arguments.arg_1, arguments.arg_2, arguments.arg_3);
     decision_tree(arguments.arg_1, arguments.arg_2, arguments.arg_3)
