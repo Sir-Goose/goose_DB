@@ -29,7 +29,7 @@ impl Database {
     fn get_value(&self, key: &str) -> Option<&String> {
         self.map.get(key)
     }
-    
+
 }
 
 fn main() {
