@@ -15,20 +15,33 @@ fn main() {
     let arguments : Arguments = Arguments::parse();
 
     println!("Argument 1: {} Argument 2: {} Argument 3: {}", arguments.arg_1, arguments.arg_2, arguments.arg_3);
-    decision_tree(arguments.arg_1)
+    decision_tree(arguments.arg_1, arguments.arg_2, arguments.arg_3)
 
 }
-fn decision_tree(database_operation : String)  {
-    let mut read = String::new();
-    read.push_str("Read");
-
+fn decision_tree(database_operation : String, key : String, value : String)  {
     match database_operation.as_str() {
-        "read" => println!("Reading data from the database."),
-        "write" => println!("Writing data to the database."),
-        "modify" => println!("Modifying data in the database."),
-        "delete" => println!("Deleting data from the database."),
+        "read" => read_database(key, value),
+        "write" => write_database(key, value),
+        "modify" => modify_database(key, value),
+        "delete" => delete_from_database(key, value),
         _ => println!("{} is not a valid operation.", database_operation),
     }
+}
+
+fn read_database(key : String, value : String) {
+    println!("Reading data from the database");
+}
+
+fn write_database(key : String, value : String) {
+    println!("Writing to the database");
+}
+
+fn modify_database(key : String, value : String) {
+    println!("Modifying data in the database");
+}
+
+fn delete_from_database(key : String, value : String) {
+    println!("Deleting data from the database");
 }
 
 
