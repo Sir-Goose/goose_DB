@@ -1,5 +1,6 @@
 use clap::*;
 use std::collections::HashMap;
+use bincode;
 
 
 
@@ -34,8 +35,8 @@ impl Database {
 
 fn main() {
     let arguments : Arguments = Arguments::parse();
+    startup_check();
 
-    let mut map:HashMap<String, String> = HashMap::new();
 
     println!("Argument 1: {} Argument 2: {} Argument 3: {}", arguments.arg_1, arguments.arg_2, arguments.arg_3);
     decision_tree(arguments.arg_1, arguments.arg_2, arguments.arg_3)
@@ -49,6 +50,11 @@ fn decision_tree(database_operation : String, key : String, value : String)  {
         "delete" => delete_from_database(key, value),
         _ => println!("{} is not a valid operation.", database_operation),
     }
+}
+
+fn startup_check() {
+    // check if database exists
+
 }
 
 fn read_database(key : String, value : String) {

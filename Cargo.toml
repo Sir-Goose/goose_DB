@@ -9,3 +9,4 @@ edition = "2021"
 clap = { version = "4.4.6", features = ["derive"] }
 derive = "1.0.0"
 features = "0.10.0"
+bincode = "2.0.0-rc.3"
