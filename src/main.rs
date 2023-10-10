@@ -72,6 +72,9 @@ fn modify_database(key : String, value : String) {
 fn delete_from_database(key : String, value : String) {
     println!("Deleting data from the database");
 }
+fn save_to_disk(database : Database) {
+    // implement serialisation
+}
 
 
 
