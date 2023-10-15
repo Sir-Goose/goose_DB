@@ -124,19 +124,28 @@ fn load_from_disk() -> Result<Database, Box<dyn std::error::Error>> {
         // Handle the error appropriately (e.g., create a new database or exit).
     }
 }
+
      */
 
+
     // Open the file for reading.
-    let file = std::fs::File::open("database.json")?;
+    let file = std::fs::File::open("database.json");
 
-    // Create a buffered reader for efficient reading.
-    let reader = std::io::BufReader::new(file);
+    match file {
+        Ok(file) => {
+            // Create a buffered reader for efficient reading.
+            let reader = std::io::BufReader::new(file);
 
-    // Deserialize the data from the file.
-    let database: Database = serde_json::from_reader(reader)?;
-
-    Ok(database)
+            // Deserialize the data from the file.
+            match serde_json::from_reader(reader) {
+                Ok(database) => Ok(database),
+                Err(e) => Err(e.into()),
+            }
+        }
+        Err(e) => Err(e.into()),
+    }
 }
+
 
 
 
