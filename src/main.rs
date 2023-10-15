@@ -1,5 +1,6 @@
 use clap::*;
 use std::collections::HashMap;
+use std::env;
 use std::io::Write;
 use bincode;
 use serde::{Serialize, Deserialize};
@@ -7,15 +8,7 @@ use serde::{Serialize, Deserialize};
 
 
 
-#[derive(Parser)]
-struct Arguments {
-    /// Read, Write, Modify, Delete
-    arg_1 : String,
-    /// Key
-    arg_2 : String,
-    /// Pair
-    arg_3 : String
-}
+
 
 #[derive(Serialize, Deserialize)]
 struct Database {
@@ -38,12 +31,31 @@ impl Database {
 }
 
 fn main() {
-    let arguments : Arguments = Arguments::parse();
+    // Get the command line arguments.
+    let args: Vec<String> = env::args().collect();
+
+    // Check if there are any command line arguments.
+    if args.len() <= 1 {
+        println!("Usage: {} <numbers>", args[0]);
+        return;
+    }
+
+    // Create an array to store the command line arguments.
+    let mut array: Vec<i32> = Vec::new();
+
+    // Iterate over the command line arguments and add them to the array.
+    for arg in args[1..].iter() {
+        let number: i32 = arg.parse().unwrap();
+        array.push(number);
+    }
+
+    // Print the array.
+    println!("{:?}", array);
     startup_check();
 
 
-    println!("Argument 1: {} Argument 2: {} Argument 3: {}", arguments.arg_1, arguments.arg_2, arguments.arg_3);
-    decision_tree(arguments.arg_1, arguments.arg_2, arguments.arg_3)
+    //println!("Argument 1: {} Argument 2: {} Argument 3: {}", arguments.arg_1, arguments.arg_2, arguments.arg_3);
+    //decision_tree(arguments.arg_1, arguments.arg_2, arguments.arg_3)
 
 }
 fn decision_tree(database_operation : String, key : String, value : String)  {
@@ -99,10 +111,31 @@ future self use this when calling save_to_disk to handle the error
 
 }
 
+fn load_from_disk() -> Result<Database, Box<dyn std::error::Error>> {
+    /*
+    match load_from_disk() {
+    Ok(database) => {
+        // Successfully loaded the database, use it as needed.
+        // For example, assign it to a variable or work with it directly.
+        let your_database = database;
+    }
+    Err(err) => {
+        eprintln!("Failed to load from disk: {}", err);
+        // Handle the error appropriately (e.g., create a new database or exit).
+    }
+}
+     */
 
+    // Open the file for reading.
+    let file = std::fs::File::open("database.json")?;
 
-fn load_from_disk(database_name : String) {
-    // implement deserialization
+    // Create a buffered reader for efficient reading.
+    let reader = std::io::BufReader::new(file);
+
+    // Deserialize the data from the file.
+    let database: Database = serde_json::from_reader(reader)?;
+
+    Ok(database)
 }
 
 
