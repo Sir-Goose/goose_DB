@@ -77,6 +77,15 @@ fn delete_from_database(key : String, value : String) {
     println!("Deleting data from the database");
 }
 fn save_to_disk(database: &Database) -> Result<(), Box<dyn std::error::Error>> {
+    /*
+future self use this when calling save_to_disk to handle the error
+
+ if let Err(err) = save_to_disk(&your_database) {
+    eprintln!("Failed to save to disk: {}", err);
+    // Handle the error appropriately (e.g., exit the program or retry).
+}
+
+ */
     // Serialize the database to JSON or any other desired format
     let serialized = serde_json::to_string(database)?;
 
@@ -88,17 +97,8 @@ fn save_to_disk(database: &Database) -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 
-
-}
-/*
-future self use this when calling save_to_disk to handle the error
-
- if let Err(err) = save_to_disk(&your_database) {
-    eprintln!("Failed to save to disk: {}", err);
-    // Handle the error appropriately (e.g., exit the program or retry).
 }
 
- */
 
 
 fn load_from_disk(database_name : String) {
