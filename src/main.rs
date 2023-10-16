@@ -70,6 +70,7 @@ fn main() {
     // Print the array.
     println!("{:?}", array);
     startup_check();
+
     let mut db = Database::new();
     db.add_new_value("key1".to_string(), "value1".to_string()).unwrap();
     db.add_new_value("key2".to_string(), "value2".to_string()).unwrap();
@@ -97,6 +98,12 @@ fn decision_tree(database_operation : String, key : String, value : String)  {
 
 fn startup_check() {
     // check if database exists
+    // if not create database
+
+    if let Err(err) = load_from_disk() {
+        eprintln!("Failed to load from disk: {}", err);
+        // Handle the error appropriately (e.g., create a new database or exit).
+    }
 
 }
 
