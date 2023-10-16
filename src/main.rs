@@ -20,7 +20,16 @@ impl Database {
         Self {map: HashMap::new() }
     }
 
-    fn add(&mut self, key: String, value: String) {
+    fn add_new_value(&mut self, key: String, value: String) -> Result<(), Error> {
+        if self.map.contains_key(&key) {
+            Err(Error::ValueAlreadyExists)
+        } else {
+            self.map.insert(key, value);
+            Ok(())
+        }
+    }
+
+    fn change_value(&mut self, key: String, value: String) {
         self.map.insert(key, value);
     }
 
@@ -28,14 +37,23 @@ impl Database {
         self.map.get(key)
     }
 
+    fn remove_value(&mut self, key: &str) {
+        self.map.remove(key);
+    }
 }
+
+#[derive(Debug)]
+enum Error {
+    ValueAlreadyExists,
+}
+
 
 fn main() {
     // Get the command line arguments.
     let args: Vec<String> = env::args().collect();
 
     // Check if there are any command line arguments.
-    if args.len() <= 1 {
+    if args.len() <= 0 {
         println!("Usage: {} <numbers>", args[0]);
         return;
     }
@@ -52,6 +70,15 @@ fn main() {
     // Print the array.
     println!("{:?}", array);
     startup_check();
+    let mut db = Database::new();
+    db.add_new_value("key1".to_string(), "value1".to_string()).unwrap();
+    db.add_new_value("key2".to_string(), "value2".to_string()).unwrap();
+    db.add_new_value("key1".to_string(), "value3".to_string()).unwrap_err();
+    println!("{:?}", db.get_value("key1")); // Some("value1")
+    db.change_value("key1".to_string(), "value4".to_string());
+    println!("{:?}", db.get_value("key1")); // Some("value4")
+    db.remove_value("key2");
+    println!("{:?}", db.get_value("key2")); // None
 
 
     //println!("Argument 1: {} Argument 2: {} Argument 3: {}", arguments.arg_1, arguments.arg_2, arguments.arg_3);
@@ -145,7 +172,6 @@ fn load_from_disk() -> Result<Database, Box<dyn std::error::Error>> {
         Err(e) => Err(e.into()),
     }
 }
-
 
 
 
