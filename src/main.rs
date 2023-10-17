@@ -104,7 +104,6 @@ fn startup_check() {
         eprintln!("Failed to load from disk: {}", err);
         // Handle the error appropriately (e.g., create a new database or exit).
     }
-
 }
 
 fn read_database(key : String, value : String) {
@@ -122,6 +121,7 @@ fn modify_database(key : String, value : String) {
 fn delete_from_database(key : String, value : String) {
     println!("Deleting data from the database");
 }
+
 fn save_to_disk(database: &Database) -> Result<(), Box<dyn std::error::Error>> {
     /*
 future self use this when calling save_to_disk to handle the error
